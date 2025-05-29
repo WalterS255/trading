@@ -1,0 +1,16 @@
+from app.client.alpaca_client import AlpacaClient
+
+def create_order(symbol, qty, side="buy", type="market", time_in_force="gtc"):
+    client = AlpacaClient()
+    order = {
+        "symbol": symbol,
+        "qty": qty,
+        "side": side,
+        "type": type,
+        "time_in_force": time_in_force
+    }
+    return client.post("/v2/orders", order)
+
+def get_order_status(order_id):
+    client = AlpacaClient()
+    return client.get(f"/v2/orders/{order_id}")
