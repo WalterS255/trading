@@ -2,13 +2,25 @@ from app.services.account import get_account_info
 from app.services.funding import get_funding_transactions
 from app.services.orders import create_order
 
-if __name__ == "__main__":
+def main():
     print("=== Info de la cuenta ===")
-    print(get_account_info())
+    try:
+        print(get_account_info())
+    except Exception as e:
+        print(f"Error al obtener la info de la cuenta: {e}")
 
     print("\n=== Fondeo reciente ===")
-    print(get_funding_transactions())
+    try:
+        print(get_funding_transactions())
+    except Exception as e:
+        print(f"Error al obtener transacciones de fondeo: {e}")
 
     print("\n=== Ejecutar orden ===")
-    order = create_order(symbol="AAPL", qty=1)
-    print(order)
+    try:
+        order = create_order(symbol="AAPL", qty=1)
+        print(order)
+    except Exception as e:
+        print(f"Error al crear la orden: {e}")
+
+if __name__ == "__main__":
+    main()
