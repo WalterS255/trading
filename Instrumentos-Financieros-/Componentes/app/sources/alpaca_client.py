@@ -1,23 +1,35 @@
+# broadcast_client.py
+import os
 import requests
-from app.config import ALPACA_API_KEY, ALPACA_SECRET_KEY, ALPACA_BASE_URL
+from dotenv import load_dotenv
 
-class AlpacaClient:
+load_dotenv()
+
+class BroadcastClient:
     def __init__(self):
-        self.base_url = ALPACA_BASE_URL
-        self.session = requests.Session()
-        self.session.headers.update({
-            "APCA-API-KEY-ID": ALPACA_API_KEY,
-            "APCA-API-SECRET-KEY": ALPACA_SECRET_KEY
-        })
-
+        self.base_url = os.getenv("BROADCAST_BASE_URL")
+        self.headers = {
+            "Authorization": f"Bearer {os.getenv('BROADCAST_API_KEY')}",
+            "Content-Type": "application/json"
+        }
+    
+    def _handle_response(self, response):
+        try:
+            response.raise_for_status()
+            return response.json()
+        except requests.HTTPError as e:
+            # Aquí podrías loggear o manejar errores de forma más sofisticada
+            raise RuntimeError(f"HTTP Error: {e}, Response: {response.text}") from e
+    
     def get(self, endpoint):
         url = f"{self.base_url}{endpoint}"
-        response = self.session.get(url)
-        response.raise_for_status()
-        return response.json()
-
+        response = requests.get(url, headers=self.headers)
+        return self._handle_response(response)
+    
     def post(self, endpoint, data):
         url = f"{self.base_url}{endpoint}"
-        response = self.session.post(url, json=data)
-        response.raise_for_status()
-        return response.json()
+        response = requests.post(url, json=data, headers=self.headers)
+        return self._handle_response(response)
+    
+    def get_account(self):
+        return self.get("/account")

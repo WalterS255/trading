@@ -1,27 +1,24 @@
 import schedule
 import time
-from etl.extractor import AlpacaExtractor
-from etl.transformer import Transformer
-from etl.loader import Loader
+from app.sources.alpaca_client import obtener_precio_actual  # Ejemplo de función
 
 def job():
-    print("Ejecutando pipeline ETL...")
-    
-    extractor = AlpacaExtractor()
-    transformer = Transformer()
-    loader = Loader()
+    print("Ejecutando tarea programada...")
+    precio = obtener_precio_actual("AAPL")  # Acción de ejemplo
+    print(f"Precio actual de AAPL: {precio}")
 
-    raw_data = extractor.get_last_prices("AAPL", limit=5)
-    transformed = transformer.transform(raw_data)
-    loader.load(transformed)
+def iniciar_scheduler():
+    print("Inicializando el scheduler...")
 
-    print("Proceso ETL completado.")
+    # Programa la tarea para que se ejecute cada 10 segundos
+    schedule.every(10).seconds.do(job)
 
-# Programa la tarea cada 10 minutos (por ejemplo)
-schedule.every(10).minutes.do(job)
+    try:
+        while True:
+            schedule.run_pending()
+            time.sleep(1)
+    except KeyboardInterrupt:
+        print("\nScheduler detenido por el usuario.")
 
 if __name__ == "__main__":
-    print("Iniciando el scheduler...")
-    while True:
-        schedule.run_pending()
-        time.sleep(1)
+    iniciar_scheduler()

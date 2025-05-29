@@ -1,5 +1,7 @@
-from app.client.alpaca_client import AlpacaClient
+
+from app.sources.alpaca_client import BroadcastClient
+
+client = BroadcastClient()
 
 def get_account_info():
-    client = AlpacaClient()
-    return client.get("/v2/account")
+    return client.get_account_info()
