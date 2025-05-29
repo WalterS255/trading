@@ -1,4 +1,5 @@
 import requests
+
 from app.config import ALPACA_API_KEY, ALPACA_SECRET_KEY, ALPACA_BASE_URL
 
 class AlpacaClient:

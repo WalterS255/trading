@@ -1,4 +1,4 @@
-from app.client.alpaca_client import AlpacaClient
+from app.sources.alpaca_client import AlpacaClient
 
 def get_account_info():
     client = AlpacaClient()

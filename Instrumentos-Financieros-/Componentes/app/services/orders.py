@@ -1,4 +1,4 @@
-from app.client.alpaca_client import AlpacaClient
+from app.sources.alpaca_client import AlpacaClient
 
 def create_order(symbol, qty, side="buy", type="market", time_in_force="gtc"):
     client = AlpacaClient()
