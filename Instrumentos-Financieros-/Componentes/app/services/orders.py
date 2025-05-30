@@ -14,3 +14,6 @@ def create_order(symbol, qty, side="buy", type="market", time_in_force="gtc"):
 def get_order_status(order_id):
     client = BroadcastClient()
     return client.get(f"/v2/orders/{order_id}")
+def cancel_order(order_id):
+    client = BroadcastClient()
+    return client.delete(f"/v2/orders/{order_id}")
