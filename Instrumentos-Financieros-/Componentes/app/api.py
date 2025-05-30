@@ -1,0 +1,23 @@
+# app/api.py
+from fastapi import FastAPI, HTTPException
+from app.services.fetcher import fetch_stock_data
+from app.services.transformer import transform_stock_data
+
+app = FastAPI()
+
+@app.get("/stock/{symbol}")
+def get_stock(symbol: str):
+    try:
+        raw_data = fetch_stock_data(symbol)
+        transformed = transform_stock_data(raw_data)
+        return transformed
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+@app.get("/stocks")
+def get_all_stocks():
+    try:
+        raw_data = fetch_stock_data()
+        transformed = transform_stock_data(raw_data)
+        return transformed
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
