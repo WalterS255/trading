@@ -4,7 +4,9 @@ from app.services.fetcher import fetch_stock_data
 from app.services.transformer import transform_stock_data
 
 app = FastAPI()
-
+@app.get("/")
+def read_root():
+    return {"mensaje": "¡API activa y funcionando!"}
 @app.get("/stock/{symbol}")
 def get_stock(symbol: str):
     try:
