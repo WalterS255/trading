@@ -2,6 +2,9 @@
 from fastapi import FastAPI, HTTPException
 from app.services.fetcher import fetch_stock_data
 from app.services.transformer import transform_stock_data
+from app.sources.alpaca_market_client import AlpacaMarketClient
+
+market_client = AlpacaMarketClient()
 
 app = FastAPI()
 @app.get("/")
@@ -23,3 +26,12 @@ def get_all_stocks():
         return transformed
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+    
+@app.get("/acciones/{symbol}")
+def obtener_datos(symbol: str):
+    resultado = market_client.get_daily_change(symbol)
+
+    if not resultado:
+        return {"error": "Datos no disponibles"}
+
+    return resultado
