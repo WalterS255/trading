@@ -2,9 +2,9 @@
 from fastapi import FastAPI, HTTPException
 from app.services.fetcher import fetch_stock_data
 from app.services.transformer import transform_stock_data
-from app.sources.alpaca_market_client import AlpacaMarketClient
+from app.sources.market_client import MarketClient
 
-market_client = AlpacaMarketClient()
+market_client = MarketClient()
 
 app = FastAPI()
 @app.get("/")
