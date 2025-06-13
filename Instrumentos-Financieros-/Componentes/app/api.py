@@ -27,7 +27,7 @@ def get_all_stocks():
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
     
-@app.get("/acciones/{symbol}")
+@app.get("/tarjetas/{symbol}")
 def obtener_datos(symbol: str):
     resultado = market_client.get_daily_card(symbol)
     print(resultado)
