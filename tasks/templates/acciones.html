@@ -1,0 +1,32 @@
+<h1>Listado de Acciones Disponibles</h1>
+
+<table borde="1" cellpadding="8" cellspacing="0">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Ticker</th>
+            <th>Precio Actual</th>
+            <th>Acción</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% if acciones %}
+            {% for accion in acciones %}
+                <tr>
+                    <td>{{ accion.nombre_accion }}</td>
+                    <td>{{ accion.ticker }}</td>
+                    <td>${{ accion.precio_actual }}</td>
+                    <td>
+                        <a href="{% url 'comprar_accion' accion.id %}">Comprar</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        {% else %}
+            <tr>
+                <td colspan="4">No se encontraron acciones disponibles.</td>
+            </tr>
+        {% endif %}
+    </tbody>
+</table>
+
+<p><a href="{% url 'home' %}">Volver al inicio</a></p>
