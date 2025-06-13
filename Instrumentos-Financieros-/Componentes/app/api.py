@@ -29,7 +29,17 @@ def get_all_stocks():
     
 @app.get("/acciones/{symbol}")
 def obtener_datos(symbol: str):
-    resultado = market_client.get_daily_change(symbol)
+    resultado = market_client.get_daily_card(symbol)
+    print(resultado)
+
+    if not resultado:
+        return {"error": "Datos no disponibles"}
+
+    return resultado
+
+@app.get("/dailylive/{symbol}")
+def obtener_mercado_vivo(symbol: str):
+    resultado = market_client.get_daily_info(symbol)
 
     if not resultado:
         return {"error": "Datos no disponibles"}
