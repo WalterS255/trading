@@ -1,0 +1,21 @@
+<h2>Comprar acción: {{ accion.nombre_accion }}</h2>
+
+<p><strong>Ticker:</strong> {{ accion.ticker }}</p>
+<p><strong>Precio actual:</strong> ${{ accion.precio_actual }}</p>
+
+<form method="post">
+    {% csrf_token %}
+    <label for="cantidad">Cantidad:</label>
+    <input type="number" name="cantidad" id="cantidad" min="1" value="1" required>
+    <button type="submit">Comprar</button>
+</form>
+
+<p><a href="{% url 'home' %}">Volver al inicio</a></p>
+
+{% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}

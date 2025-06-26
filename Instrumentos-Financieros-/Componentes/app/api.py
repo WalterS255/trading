@@ -18,19 +18,10 @@ def get_stock(symbol: str):
         return transformed
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
-@app.get("/stocks")
-def get_all_stocks():
-    try:
-        raw_data = fetch_stock_data()
-        transformed = transform_stock_data(raw_data)
-        return transformed
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
     
 @app.get("/tarjetas/{symbol}")
-def obtener_datos(symbol: str):
+def obtener_datos_tarjetas(symbol: str):
     resultado = market_client.get_daily_card(symbol)
-    print(resultado)
 
     if not resultado:
         return {"error": "Datos no disponibles"}
@@ -38,10 +29,20 @@ def obtener_datos(symbol: str):
     return resultado
 
 @app.get("/dailylive/{symbol}")
-def obtener_mercado_vivo(symbol: str):
+def obtener_mercado_en_vivo(symbol: str):
+
     resultado = market_client.get_daily_info(symbol)
 
     if not resultado:
         return {"error": "Datos no disponibles"}
 
+    return resultado
+
+@app.get("/stocks")
+def get_all_stocks():
+    resultado = market_client.get_all_stocks()
+    print("resultado: ", resultado)
+    if not resultado:
+        return {"error": "Datos no disponibles"}
+    
     return resultado
