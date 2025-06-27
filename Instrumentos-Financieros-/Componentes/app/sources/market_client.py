@@ -161,7 +161,7 @@ class MarketClient:
         
         for sector_nombre, ticker in self.sectores.items():
             ticker_base = random.choice(ticker)
-            print("Ticker base: ", ticker_base)
+            #print("Ticker base: ", ticker_base)
 
             self.polygon = RESTClient(os.getenv("POLYGON_API_KEY"))
 
@@ -195,13 +195,16 @@ class MarketClient:
                 #details = self.polygon.get_ticker_details(symbol)
                 #companyName = details.name
                 tokenLogo = os.getenv("LOGO_API_KEY")
-                acciones.append({
-                    "icono": f"https://img.logo.dev/ticker/{symbol}?token={tokenLogo}",
-                    #"titulo": companyName, 
-                    "ticker": symbol,
-                    "precio_compra": quote_data.get("bp", None),
-                    "precio_venta": quote_data.get("ap", None)
-                })
+                precio_compra = quote_data.get("bp", None)
+                precio_venta = quote_data.get("ap", None)
+                if precio_compra != 0 and precio_venta != 0:
+                    acciones.append({
+                        "icono": f"https://img.logo.dev/ticker/{symbol}?token={tokenLogo}",
+                        #"titulo": companyName, 
+                        "ticker": symbol,
+                        "precio_compra": quote_data.get("bp", None),
+                        "precio_venta": quote_data.get("ap", None)
+                    })
             
             # print(acciones)
             # Guardar en el diccionario final
@@ -214,5 +217,3 @@ class MarketClient:
             #publicar_datos_a_kafka("acciones-sector", resultado_final)
 
         return resultado_final
-    
-    
