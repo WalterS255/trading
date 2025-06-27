@@ -1,0 +1,108 @@
+.Header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 24px;
+  color: white;
+  gap: 16px;
+  flex-wrap: wrap;
+  flex-direction: row;
+}
+
+/* Botón MENÚ */
+.HeaderMenuButton {
+  display: none;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 8px;
+  background-color: var(--color-header);
+}
+
+/* Notificación */
+.HeaderNotification {
+  background-color: var(--color-fondo);
+  padding: 8px;
+  border-radius: 8px;
+  color: white;
+  text-decoration: none;
+  font-size: 18px;
+}
+
+/* Avatar */
+.HeaderAvatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-left: 16px;
+}
+
+/* Título */
+.HeaderTitle {
+  font-size: 22px;
+  font-weight: 700;
+  flex: 1;
+}
+
+/* Búsqueda */
+.HeaderSearch {
+  flex: 2;
+  margin: 0 16px;
+  display: flex;
+  align-items: center;
+}
+
+.HeaderSearch input {
+  width: 100%;
+  padding: 10px 16px;
+  border-radius: 10px;
+  border: none;
+  background-color: var(--color-header);
+  color: white;
+  font-size: 14px;
+  outline: none;
+}
+
+.HeaderSearch input::placeholder {
+  color: #6b7280;
+}
+
+/* ========== MOBILE ========== */
+@media (max-width: 768px) {
+  .Header {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 12px 16px;
+    gap: 12px;
+  }
+
+  .HeaderMenuButton {
+    display: block;
+    width: auto;
+    margin: 0;
+  }
+
+  /* Agrupación para alinear horizontalmente en mobile */
+  .HeaderTopRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+  }
+
+  .HeaderTitle,
+  .HeaderSearch {
+    width: 100%;
+    margin: 0;
+  }
+
+  .HeaderAvatar {
+    margin-left: 0;
+  }
+}

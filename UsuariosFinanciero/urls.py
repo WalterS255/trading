@@ -27,5 +27,10 @@ urlpatterns = [
     path('login/', views.iniciar_sesion, name='login'),
     path('acciones/', views.lista_acciones, name='lista_acciones'),
     path('comprar/<int:accion_id>/', views.comprar_accion, name='comprar_accion'),
+    path('api/acciones/', views.api_acciones, name='api_acciones'),
+    path('api/comprar/', views.api_comprar_accion, name='api_comprar_accion'),
+    path('api/create_user/', views.create_user, name='create_user'),
+    path('api/create_order/', views.create_order, name='create_order'),
+    path('api/view_activity/', views.view_activity, name='view_activity'),
 ]
 

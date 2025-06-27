@@ -1,0 +1,106 @@
+.AccionesCard {
+  background-color: var(--color-elemento);
+  color: white;
+  border-radius: 12px;
+  padding: 16px;
+  width: 100%;
+  max-width: 250px;
+  aspect-ratio: 4 / 2.2; /* Relación elegante de tarjeta */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  animation: fadeInAccion 0.8s ease-out both;
+}
+
+.AccionesCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+@keyframes fadeInAccion {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.TextoAccionesCard {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.Icono {
+  width: 64px;
+  height: 32px;
+  object-fit: contain;
+  margin-bottom: 8px;
+  padding-top: 8px;
+}
+
+.TextoAccionesCard h3 {
+  font-size: clamp(14px, 1.5vw, 16px);
+  font-weight: 700;
+  margin: 0;
+}
+
+.TextoAccionesCard p {
+  margin: 0;
+  font-size: clamp(12px, 1.4vw, 14px);
+  color: #cbd5e1;
+}
+
+.TextoAccionesCard p:nth-child(3) {
+  font-size: clamp(18px, 2.4vw, 22px);
+  font-weight: bold;
+  color: white;
+}
+
+.TextoAccionesCard p:nth-child(4) {
+  font-size: clamp(13px, 1.5vw, 14px);
+  font-weight: bold;
+  color: #10b981;
+}
+
+.AccionesCardGrafico {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+}
+
+.AccionesCardGrafico img {
+  width: 72px;
+  height: 48px;
+  object-fit: contain;
+  opacity: 0.85;
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 768px) {
+  .AccionesCard {
+    max-width: 250px;
+    aspect-ratio: unset;
+    height: auto;
+    padding: 14px;
+    border-radius: 10px;
+    margin: 0 auto;
+    animation: fadeInCard 1s ease-out both;
+  }
+
+  .AccionesCardGrafico {
+    bottom: 10px;
+    right: 10px;
+  }
+
+  .Icono {
+    width: 56px;
+    height: 28px;
+  }
+}

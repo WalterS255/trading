@@ -1,0 +1,65 @@
+.Grafico {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  width: 100%;
+  max-width: 600px;
+  height: auto;
+  aspect-ratio: 16 / 9;
+
+  background-color: var(--color-elemento);
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+
+  /* Animación de entrada */
+  animation: fadeInGrafico 0.8s ease-out both;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.Grafico:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+}
+
+@keyframes fadeInGrafico {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.Grafico h2 {
+  font-size: clamp(18px, 3vw, 24px);
+  color: var(--color-texto);
+  margin-bottom: 8px;
+}
+
+.Grafico p {
+  font-size: clamp(14px, 2.2vw, 16px);
+  color: #cbd5e1;
+}
+
+/* ====== RESPONSIVE ====== */
+@media (max-width: 768px) {
+  .Grafico {
+    max-width: 90vw;
+    padding: 16px;
+    aspect-ratio: 4 / 3;
+    animation: fadeInCard 1s ease-out both;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .Grafico {
+    max-width: 92vw;
+    padding: 14px;
+  }
+}

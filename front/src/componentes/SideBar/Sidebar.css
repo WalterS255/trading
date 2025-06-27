@@ -1,0 +1,61 @@
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: var(--color-elemento);
+  color: var(--color-texto);
+  height: 96vh;
+  width: 220px;
+  padding: 1rem;
+  position: sticky;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  transition: transform 0.3s ease-in-out;
+}
+
+.sidebar-menu a,
+.sidebar-footer a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  color: var(--color-texto);
+  text-decoration: none;
+  font-size: 14px;
+  border-radius: 8px;
+  transition: background 0.2s, color 0.2s;
+}
+
+.sidebar-menu a:hover,
+.sidebar-footer a:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+  color: var(--color-texto);
+}
+
+/* Opción activa se resalta con color acento */
+.sidebar-menu a.active,
+.sidebar-footer a.active {
+  background-color: #14b8a6; /* Verde destacado */
+  color: white;
+  font-weight: bold;
+}
+
+/* Responsive sidebar */
+@media (max-width: 768px) {
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    transform: translateX(-100%);
+    width: 240px;
+    z-index: 99;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+  }
+
+  .sidebar.mostrar {
+    transform: translateX(0);
+  }
+
+}

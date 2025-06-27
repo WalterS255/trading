@@ -1,0 +1,96 @@
+.CreditCard {
+  background-color: #14b8a6; /* verde azulado */
+  color: white;
+  border-radius: 16px;
+  padding: 20px;
+  width: 100%;
+  max-width: 320px;
+  height: auto;
+  aspect-ratio: 16 / 9; /* Mantiene proporción elegante */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  font-family: 'Arial', sans-serif;
+  position: relative;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  /* 💫 Animación suave de aparición */
+  animation: fadeInCard 0.8s ease-out both;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  /* Centrar la tarjeta si es necesario */
+  margin: 0 auto;
+}
+
+/* Sutileza en hover para interacción */
+.CreditCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+}
+
+/* Entrada inicial */
+@keyframes fadeInCard {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.title {
+  font-size: clamp(14px, 2vw, 16px);
+  font-weight: 500;
+  color: #cbd5e1;
+  margin-bottom: 12px;
+}
+
+.number {
+  font-size: clamp(18px, 3vw, 20px);
+  font-weight: bold;
+  letter-spacing: 2px;
+  margin-bottom: 12px;
+}
+
+.propietario {
+  font-size: clamp(10px, 2vw, 12px);
+  color: #e0f2f1;
+  font-weight: 600;
+}
+
+/* Posición de la compañía */
+.TextoDer {
+  position: absolute;
+  top: 16px;
+  right: 20px;
+  font-weight: bold;
+  font-size: clamp(12px, 2vw, 14px);
+}
+
+/* ======= RESPONSIVE ======= */
+@media (max-width: 768px) {
+  .CreditCard {
+    /* Mantener el max-width para que no ocupe toda la pantalla */
+    max-width: 300px; /* Ligeramente más pequeña en móvil */
+    aspect-ratio: unset;
+    height: auto;
+    padding: 16px;
+    border-radius: 12px;
+    /* Asegurar que esté centrada */
+    margin: 0 auto;
+    animation: fadeInCard 1s ease-out both;
+  }
+  
+  .TextoDer {
+    top: 12px;
+    right: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .CreditCard {
+    /* Para pantallas muy pequeñas, permitir más ancho pero con límite */
+    max-width: 280px;
+    padding: 14px;
+  }
+}

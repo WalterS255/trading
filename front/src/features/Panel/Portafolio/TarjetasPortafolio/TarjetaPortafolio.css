@@ -1,0 +1,64 @@
+.TarjetaPortafolio {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #1f2937;
+  padding: 12px 16px;
+  border-radius: 12px;
+  margin-bottom: 10px;
+  color: white;
+  width: fit-content;
+  font-family: 'Arial', sans-serif;
+}
+
+/* Ícono */
+.FirstRow .IconoTarjeta {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+  border-radius: 8px;
+  background-color: var(--color-elemento);
+}
+
+/* Centro: empresa y total */
+.SecondRow {
+  margin-left: 12px;
+  flex-grow: 1;
+  margin-right: 40px;
+}
+
+.empresa {
+  font-size: 14px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.total {
+  font-size: 12px;
+  color: #94a3b8;
+  margin: 2px 0 0 0;
+}
+
+.ThirdRow {
+  text-align: right;
+}
+
+.valor {
+  font-size: 14px;
+  font-weight: bold;
+  margin: 0;
+}
+
+.diferencia {
+  font-size: 13px;
+  font-weight: 600;
+  margin: 2px 0 0 0;
+}
+
+.rojo {
+  color: #f87171;
+}
+
+.verde {
+  color: #10b981;
+}

@@ -1,0 +1,36 @@
+:root.tema-claro {
+  --color-fondo: #aaacad;
+  --color-elemento: white;
+  --color-sidebar: #e2e8f0;
+  --color-texto: #1f2937;
+  --color-scroll: #cbd5e1;
+  --color-header: #7f8486;
+}
+
+:root.tema-oscuro {
+  --color-fondo: #303440;
+  --color-sidebar: #303440;
+  --color-elemento: #1a1f29;
+  --color-texto: white;
+  --color-scroll: #374151;
+  --color-header: #1a1f29;
+}
+
+/* GLOBAL: aplica los colores a fondo y texto */
+body {
+  background-color: var(--color-fondo);
+  color: var(--color-texto);
+  transition: background-color 0.3s, color 0.3s;
+}
+
+@media (max-width: 1024px) {
+  /* Tablets y pantallas medianas */
+}
+
+@media (max-width: 768px) {
+  /* Móviles grandes */
+}
+
+@media (max-width: 480px) {
+  /* Móviles pequeños */
+}

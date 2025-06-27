@@ -1,0 +1,53 @@
+.TransaccionesTarjetas {
+  display: grid;
+  grid-template-columns: 2fr 2fr 1fr 1fr 2fr auto;
+  align-items: center;
+  padding: 12px 20px;
+  background-color: var(--color-elemento);
+  color: gray;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  width: 100%;
+  font-size: 14px;
+}
+
+.Movimiento {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 500;
+}
+
+.FechaHora {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 12px;
+  color: #94a3b8;
+}
+
+.FechaHora .Fecha {
+  color: white;
+  font-weight: 500;
+  font-size: 13px;
+}
+
+.Cantidad {
+  color: #10b981;
+  font-weight: bold;
+}
+
+.Comision {
+  color: #e5e7eb;
+}
+
+.MetodoPago {
+  color: #f3f4f6;
+}
+
+.Opciones {
+  font-size: 18px;
+  color: #9ca3af;
+  cursor: pointer;
+  text-align: right;
+}

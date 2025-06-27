@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.contrib.auth import login as auth_login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
@@ -7,6 +7,8 @@ from django.contrib import messages
 from django.db import IntegrityError
 from django.conf import settings
 import requests
+from django.views.decorators.csrf import csrf_exempt
+import json
 
 from .forms import RegistroUsuarioForm
 from .models import Accion, Transaccion
@@ -95,3 +97,76 @@ def lista_acciones(request):
 def transacciones_usuario(request):
     transacciones = Transaccion.objects.filter(usuario=request.user).order_by('-fecha_transaccion')
     return render(request, 'transacciones_usuario.html', {'transacciones': transacciones})
+
+def api_acciones(request):
+    url = "https://fakestoreapi.com/products"
+    try:
+        response = requests.get(url)
+        productos = response.json() if response.status_code == 200 else []
+    except Exception:
+        productos = []
+
+    acciones = []
+    for item in productos:
+        acciones.append({
+            'id': item['id'],
+            'nombre_accion': item['title'],
+            'ticker': item['id'],
+            'precio_actual': item['price']
+        })
+
+    return JsonResponse(acciones, safe=False)
+
+@csrf_exempt
+def api_comprar_accion(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            ticker = data.get('ticker')
+            cantidad = int(data.get('cantidad', 1))
+            # Aquí puedes buscar la acción en tu base de datos si lo deseas
+            # accion = Accion.objects.get(ticker=ticker)
+            # resultado_api = realizar_orden(ticker, cantidad, tipo='buy')
+            # Guardar la transacción si el usuario está autenticado
+            # Transaccion.objects.create(...)
+            return JsonResponse({'status': 'ok', 'mensaje': 'Compra realizada'})
+        except Exception as e:
+            return JsonResponse({'status': 'error', 'mensaje': str(e)}, status=400)
+    return JsonResponse({'error': 'Método no permitido'}, status=405)
+
+@csrf_exempt
+def create_user(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            # Aquí deberías crear el usuario con los datos recibidos
+            # Por ejemplo: Usuario.objects.create(**data)
+            # O llamar a un serializer si usas DRF
+            return JsonResponse({'status': 'ok', 'mensaje': 'Usuario creado'})
+        except Exception as e:
+            return JsonResponse({'status': 'error', 'mensaje': str(e)}, status=400)
+    return JsonResponse({'error': 'Método no permitido'}, status=405)
+
+@csrf_exempt
+def create_order(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            # Aquí deberías crear la orden con los datos recibidos
+            # Por ejemplo: realizar_orden(data['symbol'], data['qty'], tipo=data['side'])
+            return JsonResponse({'status': 'ok', 'mensaje': 'Orden creada'})
+        except Exception as e:
+            return JsonResponse({'status': 'error', 'mensaje': str(e)}, status=400)
+    return JsonResponse({'error': 'Método no permitido'}, status=405)
+
+@csrf_exempt
+def view_activity(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            # Aquí deberías consultar la actividad según el account_id y category
+            # Por ejemplo: actividades = obtener_actividades(data['account_id'], data['category'])
+            return JsonResponse({'status': 'ok', 'actividades': []})
+        except Exception as e:
+            return JsonResponse({'status': 'error', 'mensaje': str(e)}, status=400)
+    return JsonResponse({'error': 'Método no permitido'}, status=405)
