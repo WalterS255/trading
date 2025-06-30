@@ -3,6 +3,7 @@ from datetime import datetime, date, timezone
 from dotenv import load_dotenv
 import requests
 import base64
+import json
 
 from app.schemas import UserRequest, orderRequest, activityRequest
 load_dotenv()
@@ -22,11 +23,11 @@ class BrokerClient:
         # Convertir a string legible
         base64_string = base64_bytes.decode("utf-8")
 
-        authorization = "Basic " + base64_string
+        self.authorization = "Basic " + base64_string
 
         self.headers = {
             "accept": "application/json",
-            "authorization": authorization
+            "authorization": self.authorization
         }
     '''
     Ejemplo creación usuarios
@@ -125,7 +126,7 @@ class BrokerClient:
                     
         elif response.status_code == 403:
             print(response.json())
-            return "Acceso denegado (403 Forbidden): revisa tus claves o el entorno."
+            return "Acceso denegado (403 Forbidden): revisar claves."
         else:
             print(f"Error {response.status_code}:")            
             return response 
@@ -150,8 +151,76 @@ class BrokerClient:
             order.pop("account_id", None)
                 
             response = requests.post(url, json=order, headers=self.headers)
-            return response
+
+            respuesta = response.json()            
+
+            orden = {
+                "orden_id": respuesta["id"],
+                "fecha_creacion": respuesta["created_at"],
+                "fecha_realizacion": respuesta["filled_at"],
+                "ticker": respuesta["symbol"],
+                "tipo_orden": respuesta["type"],
+                "tipo_transacción": respuesta["side"],
+                "cantidad": respuesta["qty"],
+                "precio_limite": respuesta["limit_price"],
+                "precio_parada": respuesta["stop_price"],
+                "estado": respuesta["status"],
+                "fecha_expiracion": respuesta["expires_at"]
+            }
+
+            return orden
+    
+    def order_subscription(self):
+        # Endpoint
+        url = f"https://broker-api.sandbox.alpaca.markets/v2/events/trades?since=2025-06-27&until={date.today().isoformat()}"
+        # print(url)
         
+        headers = {
+            "accept": "text/event-stream",
+            "authorization": self.authorization
+        }
+        # Hacemos la petición en streaming
+        response = requests.get(url, headers=headers, stream=True)
+
+        # print(response.iter_lines())
+    
+        # Bandera para saber si ya pasamos el mensaje inicial
+        first_message_skipped = False
+
+        for line in response.iter_lines():
+            # Ignorar líneas vacías
+            if not line or line.strip() == b'':
+                continue
+
+            # Convertir bytes → string
+            line_str = line.decode("utf-8").strip()
+            
+            # Omitir mensaje inicial si es el primero
+            if not first_message_skipped:                
+                first_message_skipped = True
+                continue
+
+            start = line_str.find("{")
+
+            if start != -1:
+                json_str = line_str[start:]
+                try:
+                    data = json.loads(json_str)                                    
+                    # Solo procesar fills
+                    if data.get("event") == "fill":
+                        order = data["order"]
+                        
+                        filled_price = float(order["filled_avg_price"])
+                        filled_qty = float(order["filled_qty"])
+                        
+                        notional = filled_price * filled_qty
+                        commission = notional * 0.02
+                        print(f"Orden completada, comisión calculada: ${commission:.2f}")
+                except json.JSONDecodeError as e:
+                    print("Error decodificando JSON:", e)
+            else:
+                print("No se encontró JSON en la línea.")
+
     def view_user_trading_activity(self, payload: activityRequest):
         '''
         {

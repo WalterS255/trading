@@ -15,18 +15,20 @@ from pydantic import BaseModel
 market_client = MarketClient()
 broker_client = BrokerClient()
 
+broker_client.order_subscription()
+
 app = FastAPI()
 @app.get("/")
 def read_root():
     return {"mensaje": "¡API activa y funcionando!"}
-@app.get("/api/stock/{symbol}")
+'''@app.get("/api/stock/{symbol}")
 def get_stock(symbol: str):
     try:
         raw_data = fetch_stock_data(symbol)
         transformed = transform_stock_data(raw_data)
         return transformed
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code=500, detail=str(e))'''
     
 @app.get("/api/market/tarjetas/{symbol}")
 def obtener_datos_tarjetas(symbol: str):
